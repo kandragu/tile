@@ -5,9 +5,11 @@ import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bestgoodmove.tiles.data.Item
 import com.bestgoodmove.tiles.data.Request
 import com.bestgoodmove.tiles.data.TileResult
 import com.bestgoodmove.tiles.ui.TileListAdapter
@@ -32,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                     longToast("Request performed")
 //                    Log.d(javaClass.simpleName, result.toString())
                     val tileResult  = TileResult(result)
-                    tileList.adapter = TileListAdapter(tileResult)
+                    tileList.adapter = TileListAdapter(tileResult, { item : Item -> partItemClicked(item)})
                 }
 
             }
@@ -44,7 +46,11 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+}
 
+
+    private fun partItemClicked(item : Item) {
+        Toast.makeText(this, "Clicked: ${item.Label}", Toast.LENGTH_LONG).show()
     }
 
     private fun isNetworkConnected(): Boolean {

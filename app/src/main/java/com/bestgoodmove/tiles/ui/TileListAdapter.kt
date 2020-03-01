@@ -9,15 +9,16 @@ import com.bestgoodmove.tiles.data.Item
 import com.bestgoodmove.tiles.data.TileResult
 import kotlinx.android.synthetic.main.item_tile.view.* //1
 
-class TileListAdapter(private val tileList: TileResult): RecyclerView.Adapter<TileListAdapter.ViewHolder>() {
+class TileListAdapter(private val tileList: TileResult, val clickListener: (Item) -> Unit): RecyclerView.Adapter<TileListAdapter.ViewHolder>() {
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bindRepo(tile: Item) { //5
+        fun bindRepo(tile: Item, clickListener: (Item) -> Unit) { //5
             with(tile) {
               itemView.tileLabel.text = tile.Priority.toString()
                 itemView.tileButton.text = tile.Label
+                itemView.tileButton.setOnClickListener { clickListener(tile)}
             }
         }
     }
@@ -35,7 +36,7 @@ class TileListAdapter(private val tileList: TileResult): RecyclerView.Adapter<Ti
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindRepo(tileList.items[position]) //3
+        holder.bindRepo(tileList.items[position],clickListener) //3
     }
 
 
