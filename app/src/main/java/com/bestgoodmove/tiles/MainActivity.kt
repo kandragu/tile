@@ -6,8 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestgoodmove.tiles.data.Request
+import com.bestgoodmove.tiles.data.TileResult
+import com.bestgoodmove.tiles.ui.TileListAdapter
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.uiThread
@@ -18,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //tileList.layoutManager = LinearLayoutManager(this)
+        tileList.layoutManager =  GridLayoutManager(this, 3)
 
         val url = "http://10.0.2.2:9235/tiles"
         if (isNetworkConnected()) {
@@ -26,6 +31,8 @@ class MainActivity : AppCompatActivity() {
                 uiThread (){
                     longToast("Request performed")
 //                    Log.d(javaClass.simpleName, result.toString())
+                    val tileResult  = TileResult(result)
+                    tileList.adapter = TileListAdapter(tileResult)
                 }
 
             }
@@ -36,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                 .setIcon(android.R.drawable.ic_dialog_alert).show()
         }
 
-        tileList.layoutManager = LinearLayoutManager(this)
+
 
     }
 
