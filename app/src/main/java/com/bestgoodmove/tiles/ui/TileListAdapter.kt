@@ -16,7 +16,7 @@ class TileListAdapter(private val tileList: TileResult): RecyclerView.Adapter<Ti
 
         fun bindRepo(tile: Item) { //5
             with(tile) {
-//                itemView.tileLabel.text = tile.Label
+              itemView.tileLabel.text = tile.Priority.toString()
                 itemView.tileButton.text = tile.Label
             }
         }
