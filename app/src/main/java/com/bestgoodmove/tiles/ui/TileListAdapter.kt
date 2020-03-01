@@ -16,7 +16,7 @@ class TileListAdapter(private val tileList: TileResult, val clickListener: (Item
 
         fun bindRepo(tile: Item, clickListener: (Item) -> Unit) { //5
             with(tile) {
-              itemView.tileLabel.text = tile.Priority.toString()
+//              itemView.tileLabel.text = tile.Priority.toString()
                 itemView.tileButton.text = tile.Label
                 itemView.tileButton.setOnClickListener { clickListener(tile)}
             }

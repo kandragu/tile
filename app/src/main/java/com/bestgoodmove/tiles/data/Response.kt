@@ -7,5 +7,6 @@ data class TileResult(val items: Array<Item>){
 }
 
 data class Item (val Id:String,val Label:String,val Priority:Double ){
-
 }
+
+data class Message(val message:String)

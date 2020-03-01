@@ -50,7 +50,21 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun partItemClicked(item : Item) {
-        Toast.makeText(this, "Clicked: ${item.Label}", Toast.LENGTH_LONG).show()
+
+        val url = "http://10.0.2.2:9235/selection"
+
+        doAsync {
+            val result = Request(url).sendPostRequest(item.Id)
+            uiThread (){
+                result?.let {
+                    longToast(it)
+                    Log.d(javaClass.simpleName, it)
+                }
+
+            }
+
+        }
+
     }
 
     private fun isNetworkConnected(): Boolean {
