@@ -9,25 +9,30 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
 
-class Request(val url: String) {
+class Request {
+
+    companion object {
+        private  val BASE_URL = "http://10.0.2.2:9235"
+        private  val SELECTION = "/selection?"
+        private  val TILE = "/tiles"
+        private  val TILE_URL = BASE_URL+ TILE
+        private val SELECTION_URL = BASE_URL+ SELECTION
+    }
 
     fun run ():Array<Item> {
-        val repoListJsonStr = URL(url).readText()
+
+        val repoListJsonStr = URL(TILE_URL).readText()
         Log.d(javaClass.simpleName, repoListJsonStr)
         return Gson().fromJson(repoListJsonStr,  Array<Item>::class.java) //4
 
     }
 
-    fun runPost():Unit {
-        val repoListJsonStr = URL(url).readText()
-        Log.d(javaClass.simpleName, repoListJsonStr)
-    }
 
 
     fun sendPostRequest(Id:String):String? {
         var message:String? = null;
         var reqParam = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(Id, "UTF-8")
-        val url = "http://10.0.2.2:9235/selection?" + "$reqParam"
+        val url = "$SELECTION_URL" + "$reqParam"
         val mURL = URL(url)
 
         println("url : $url");
@@ -37,7 +42,6 @@ class Request(val url: String) {
             requestMethod = "POST"
 
 
-//            println("URL : $url")
             println("Response Code : $responseCode")
 
             BufferedReader(InputStreamReader(inputStream)).use {

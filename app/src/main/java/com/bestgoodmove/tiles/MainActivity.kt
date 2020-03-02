@@ -23,16 +23,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //tileList.layoutManager = LinearLayoutManager(this)
         tileList.layoutManager =  GridLayoutManager(this, 3)
 
-        val url = "http://10.0.2.2:9235/tiles"
         if (isNetworkConnected()) {
             doAsync {
-                val result = Request(url).run()
+                val result = Request().run()
                 uiThread (){
                     longToast("Request performed")
-//                    Log.d(javaClass.simpleName, result.toString())
                     val tileResult  = TileResult(result)
                     tileList.adapter = TileListAdapter(tileResult, { item : Item -> partItemClicked(item)})
                 }
@@ -48,13 +45,10 @@ class MainActivity : AppCompatActivity() {
 
 }
 
-
     private fun partItemClicked(item : Item) {
 
-        val url = "http://10.0.2.2:9235/selection"
-
         doAsync {
-            val result = Request(url).sendPostRequest(item.Id)
+            val result = Request().sendPostRequest(item.Id)
             uiThread (){
                 result?.let {
                     longToast(it)
